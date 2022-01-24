@@ -1,8 +1,4 @@
-from numpy import mean, max, min
-
-# See https://muthu.co/reducing-the-number-of-colors-of-an-image-using-median-cut-algorithm/
-
-# Implementation of median cut algorithm here is largely taken from this post.
+from numpy import mean, max, min, unique
 
 class PalleteGenerator:
 
@@ -50,6 +46,10 @@ class PalleteGenerator:
         self.split_into_buckets(img_array_1, depth - 1)
         self.split_into_buckets(img_array_2, depth - 1)
 
+    def flatten_img_array(self, img_array):
+        return unique(img_array.reshape(-1, img_array.shape[2]), axis=0)
+
     def generate_pallete(self, img_array, depth):
-        self.split_into_buckets(img_array, depth)
+        flattened_array = self.flatten_img_array(img_array)
+        self.split_into_buckets(flattened_array, depth)
         return self.pallete

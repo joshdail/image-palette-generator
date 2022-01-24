@@ -35,14 +35,8 @@ class ImageReader:
         img = PIL.Image.open(fp=filedialog.askopenfilename())
         img_array = array(img)
 
-        # The image array has to be flattened to prevent memory overload
-        rgb_values = []
-        for row in img_array:
-            rgb_values = [value.tolist() for value in row]
-
-        # Converting back into an array to allow for array slicing etc
-        pallete_rgb_values = PalleteGenerator().generate_pallete(array(rgb_values), 4)
-        # print(pallete_rgb_values)
+        # Image flattening is now handled by PalleteGenerator
+        pallete_rgb_values = PalleteGenerator().generate_pallete(img_array, 4)
 
         hex_values = [rgb2hex(value[0], value[1], value[2]) for value in pallete_rgb_values]
         # print(hex_values)
